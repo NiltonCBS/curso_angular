@@ -18,6 +18,8 @@ export class HelloComponent {
     this.isDisabled = !this.isDisabled;
   };
 
+  //o signal é um wrapper em torno de um valor que notifica os consumidores interessados quando esse valor muda.
+  //Signal graváveis - fornecem um API para atualizar seus valores diretamente. Você cria sinais graváveis chamando o signal com o valor inicial do sinal
   protected count = signal(0);
 
   //O sinal computado representa estado derivado e retorna um valor
