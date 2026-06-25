@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
 import { Product } from '../product';
@@ -12,6 +12,12 @@ import { Product } from '../product';
 export class ProductsCardComponent {
 
   readonly product = input.required<Product>();
-
   readonly addButtonLabel = input('Add to Cart');
+
+  readonly addToCart = output<Product>();
+
+  protected onAddToCard(){
+    this.addToCart.emit(this.product());
+  }
+
 }

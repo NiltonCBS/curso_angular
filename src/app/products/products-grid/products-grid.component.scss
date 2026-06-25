@@ -1,17 +1,25 @@
-.products-container{
+.products-container {
   display: grid;
   gap: 1rem;
 }
 
-.products-grid{
+.search-field {
+  display: block;
+  width: 100%;
+}
+
+.search-preview {
+  margin: 0;
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.products-grid {
   display: grid;
-  //cria a grid automaticamente com o tamanho de 280px
-  //Preencha o espaço disponível com o máximo de colunas que couberem, desde que cada uma tenha no minimo 280px e distribua o espaço restante uniformemente.
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 16px;
 }
 
-.empty-state{
+.empty-state {
   grid-column: 1 / -1;
   display: flex;
   flex-direction: column;
@@ -20,7 +28,7 @@
   padding: 4rem 2rem;
   text-align: center;
 
-  mat-icon{
+  mat-icon {
     font-size: 4rem;
     width: 4rem;
     height: 4rem;
@@ -28,7 +36,7 @@
     margin-bottom: 1rem;
   }
 
-  h3{
+  h3 {
     margin: 0 0 0.5rem;
     color: var(--mat-sys-on-surface);
   }

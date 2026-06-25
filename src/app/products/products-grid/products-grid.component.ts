@@ -1,15 +1,28 @@
-import { Component, signal } from '@angular/core';
+import { Product } from './../product';
+import { Component, computed, inject, signal } from '@angular/core';
 import { ProductsCardComponent } from '../products-card/products-card.component';
-import { Product } from '../product';
 import { MatIcon } from "@angular/material/icon";
+import {MatInputModule} from '@angular/material/input';
+import {FormsModule} from '@angular/forms';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { CartServiceService } from '../../cart/cart-service.service';
 
 @Component({
   selector: 'app-products-grid',
-  imports: [ProductsCardComponent, MatIcon],
+  imports: [ProductsCardComponent, MatIcon, MatInputModule, FormsModule, MatFormFieldModule],
   templateUrl: './products-grid.component.html',
   styleUrl: './products-grid.component.scss'
 })
 export class ProductsGridComponent {
+
+  // private cartService!: CartServiceService
+
+  // ProductGrid(cartService: CartServiceService){
+  //   this.cartService = cartService;
+  // }
+
+  protected readonly searchTerm = signal('');
+
   //Product[] - diz que é uma lista de produtos (product.ts)
   protected readonly products = signal<Product[]>([
     {
@@ -33,6 +46,31 @@ export class ProductsGridComponent {
       originalPrice: 99.99
     }
   ]);
+
+  private readonly cartService = inject(CartServiceService);
+
+  protected readonly filterProducts = computed(() => {
+    const term = this.searchTerm().toLocaleLowerCase().trim();
+    if(!term) return this.products();
+
+    return this.products().filter((product) =>
+      product.name.toLocaleLowerCase().includes(term) ||
+      product.description.toLocaleLowerCase().includes(term)
+    );
+  });
+
+  protected onAddToCard(product: Product){
+    this.cartService.addToCart(product);
+  }
+
+  // protected clearSearch(){
+  //   this.searchTerm.set('');
+  // }
+
+
+  // protected trimSearch(){
+  //   this.searchTerm.update((value) => value.trim());
+  // }
 
 
 }
